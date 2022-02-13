@@ -1,0 +1,107 @@
+{
+  "asyncapi": "2.0.0",
+  "info": {
+    "title": "User Management",
+    "version": "1.0.0",
+    "description": "This is a simple example of an AsyncAPI HTTP document.\n",
+    "termsOfService": "http://api.company.com/terms"
+  },
+  "servers": {
+    "production": {
+      "url": "http://api.company.com:1234",
+      "description": "Allows you to connect using the HTTP protocol.",
+      "protocol": "https"
+    }
+  },
+  "channels": {
+    "/2.0/users/{username}": {
+      "parameters": {
+        "username": {
+          "description": "username of the user for logging to the portal.",
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "publish": {
+        "bindings": {
+          "http": {
+            "type": "request",
+            "method": "GET"
+          }
+        }
+      },
+      "subscribe": {
+        "bindings": {
+          "http": {
+            "type": "response"
+          }
+        },
+        "message": {
+          "$ref": "#/components/messages/getUserName"
+        }
+      }
+    },
+    "/2.0/users/": {
+      "publish": {
+        "bindings": {
+          "http": {
+            "type": "request",
+            "method": "POST",
+            "query": {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        },
+        "message": {
+          "$ref": "#/components/messages/getUserName"
+        }
+      }
+    }
+  },
+  "components": {
+    "messages": {
+      "getUserName": {
+        "payload": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "Id": {
+              "type": "string"
+            },
+            "org": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "loginCount": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "name",
+            "Id",
+            "org",
+            "role",
+            "disabled",
+            "loginCount"
+          ]
+        }
+      }
+    }
+  }
+}

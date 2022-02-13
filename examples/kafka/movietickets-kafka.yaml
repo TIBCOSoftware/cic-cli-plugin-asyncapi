@@ -1,0 +1,164 @@
+asyncapi: 2.1.0
+id: urn:com:movie:booking:system
+info:
+  title: Kafka Application
+  version: 1.0.0
+  description: Kafka Application
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  broker0:
+    url: ec2-35-154-182-122.ap-south-1.compute.amazonaws.com:9092
+    description: Broker 0 of cluster A
+    protocol: kafka
+    protocolVersion: 1.0.0
+
+  broker1:
+    url: 192.168.2.4:9092
+    description: Broker 1 of cluster A
+    protocol: kafka
+    protocolVersion: 1.0.0
+
+  broker2:
+    url: 10.2.1.3:9092
+    description: Broker 2 of cluster A
+    protocol: kafka
+    protocolVersion: 1.0.0
+
+channels:
+  initPayment:
+    description: Initiate Payment after tickets booked
+    subscribe:
+      message:
+        "$ref": "#/components/messages/payment"
+  bookingStats:
+    description: Get stats of tickets sold at theatre
+    subscribe:
+      message:
+        "$ref": "#/components/messages/bookingStats"
+  bookTickets:
+    description: Book tickets for a movie
+    publish:
+      bindings:
+        kafka:
+          groupId:
+            type: string
+            enum:
+            - GRP001
+            - GRP002
+      message:
+        "$ref": "#/components/messages/bookTickets"
+components:
+  messages:
+    bookingStats:
+      schemaFormat: application/schema+json;version=draft-07
+      payload:
+        "$ref": "#/components/schemas/bookingStats"
+    bookTickets:
+      schemaFormat: application/schema+json;version=draft-07
+      payload:
+        "$ref": "#/components/schemas/bookTickets"
+    payment:
+      schemaFormat: application/schema+json;version=draft-07
+      payload:
+        "$ref": "#/components/schemas/payment"
+  schemas:
+    bookTickets:
+      "$schema": http://json-schema.org/draft-07/schema#
+      title: reserveSeats
+      type: object
+      required:
+      - theatre
+      - screenNo
+      - action
+      - uid
+      - seatNo
+      properties:
+        theatre:
+          title: Theatre
+          type: string
+          default: ''
+          examples:
+          - THTR0001
+        screenNo:
+          title: Screenno
+          type: string
+          default: ''
+          examples:
+          - '2'
+        action:
+          title: Action
+          type: string
+          default: ''
+          examples:
+          - block
+        uid:
+          title: Uid
+          type: string
+          default: ''
+          examples:
+          - UID00012
+        seatNo:
+          title: Seatno
+          type: string
+          default: ''
+          examples:
+          - A14
+    bookingStats:
+      "$schema": http://json-schema.org/draft-07/schema#
+      title: Root
+      type: object
+      required:
+      - description
+      - figures
+      properties:
+        description:
+          title: Description
+          type: string
+          default: ''
+          examples:
+          - Total seats booked at every theatre
+        figures:
+          title: Figures
+          type: array
+          default: []
+          items:
+            title: Items
+            type: object
+            required:
+            - Theatre
+            - total
+            properties:
+              Theatre:
+                title: Theatre
+                type: string
+                default: ''
+                examples:
+                - THTR00012
+              total:
+                title: Total
+                type: integer
+                examples:
+                - 80
+                default: 0
+    payment:
+      "$schema": http://json-schema.org/draft-07/schema#
+      title: Root
+      type: object
+      required:
+      - uid
+      - totalTickets
+      properties:
+        uid:
+          title: Uid
+          type: string
+          default: ''
+          examples:
+          - 'UID0001234'
+        totalTickets:
+          title: Totaltickets
+          type: integer
+          examples:
+          - 45
+          default: 0

@@ -1,0 +1,52 @@
+asyncapi: 2.1.0
+id: urn:com:movie:booking:system
+info:
+  title: Kafka Application
+  version: 1.0.0
+  description: Kafka Application
+
+servers:
+  broker0:
+    url: ec2-35-154-182-122.ap-south-1.compute.amazonaws.com:9092
+    description: Broker 0 of cluster A
+    protocol: kafka
+    protocolVersion: 1.0.0
+
+channels:
+  A:
+    description: Sample channel A
+    subscribe:
+      bindings:
+        kafka:
+          groupId:
+            type: string
+            default: GRP23
+      message:
+        "$ref": "#/components/messages/message1"
+  B:
+    description: Sample channel B
+    publish:
+      bindings:
+        kafka:
+          groupId:
+            type: string
+            default: GRP23
+      message:
+        "$ref": "#/components/messages/message2"
+
+components:
+  messages:
+    message1:
+      payload:
+        "$ref": "#/components/schemas/payload1"
+    message2:
+      payload:
+        "$ref": "#/components/schemas/payload2"
+
+  schemas:
+    payload2:
+      type: number
+    payload1:
+      type: string
+
+  

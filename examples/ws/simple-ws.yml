@@ -1,0 +1,30 @@
+asyncapi: 2.1.0
+info:
+  title: Get stock prices at realtime
+  version: 1.0.0
+servers:
+  prod:
+    url: 'ws://localhost:9998'
+    description: get Stock details
+    protocol: ws
+channels:
+  /stocks/{stocks_name}:
+    parameters:
+      stocks_name:
+        schema:
+          type: string
+    bindings:
+      ws:
+        query:
+          type: object
+          properties:
+            currency: 
+              type: string        
+    subscribe:
+      message:
+        $ref: "#/components/messages/msg1"
+components:
+  messages:
+    msg1:
+      payload:
+        type: number

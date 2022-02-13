@@ -1,0 +1,27 @@
+{
+    "FLOW": "github.com/project-flogo/flow",
+    "SUBFLOW":"github.com/project-flogo/flow/activity/subflow",
+    "ACTIVITY": {
+        "LOG" : "github.com/project-flogo/contrib/activity/log",
+        "RETURN": "github.com/project-flogo/contrib/activity/actreturn",
+        "KAFKA": "git.tibco.com/git/product/ipaas/wi-plugins.git/contributions/kafka/src/app/Kafka/activity/producer",
+        "WS_WRITE_DATA": "github.com/project-flogo/websocket/activity/wswritedata",
+        "SUBFLOW": "github.com/project-flogo/flow/activity/subflow",
+        "MQTT": "git.tibco.com/git/product/ipaas/wi-mqtt.git/Mqtt/activity/publish"
+        
+    },
+
+    "TRIGGER": {
+        "TIMER": "git.tibco.com/git/product/ipaas/wi-contrib.git/contributions/General/trigger/timer",
+        "KAFKA": "git.tibco.com/git/product/ipaas/wi-plugins.git/contributions/kafka/src/app/Kafka/trigger/consumer",
+        "WS_SERVER": "github.com/project-flogo/websocket/trigger/wsserver",
+        "MQTT": "git.tibco.com/git/product/ipaas/wi-mqtt.git/Mqtt/trigger/subscribe",
+        "HTTP": "git.tibco.com/git/product/ipaas/wi-contrib.git/contributions/General/trigger/rest"
+        
+    },
+
+    "CONNECTOR": {
+        "KAFKA": "git.tibco.com/git/product/ipaas/wi-plugins.git/contributions/kafka/src/app/Kafka/connector/kafka",
+        "MQTT": "git.tibco.com/git/product/ipaas/wi-mqtt.git/Mqtt/connector/connection"
+    }
+}

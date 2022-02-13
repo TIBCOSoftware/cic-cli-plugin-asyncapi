@@ -1,0 +1,120 @@
+asyncapi: 2.1.0
+id: 'urn:com:smartylighting'
+info:
+  title: AsyncAPI Sample
+  version: 1.0.0
+  x-logo: 'https://avatars0.githubusercontent.com/u/16401334?v=4&s=200'
+  description: |
+    This is a simple example of an _AsyncAPI_ document.
+  termsOfService: 'https://api.company.com/terms'
+servers:
+  default:
+    url: 'api.company.com:{port}/{app-id}'
+    description: Allows you to connect using the MQTT protocol.
+    variables:
+      app-id:
+        default: demo
+        description: 'You can find your `app-id` in our control panel, under the auth tab.'
+      port:
+        default: '1883'
+    protocol: mqtt
+
+channels:
+  hitch/accounts/1/0/action/user/signup:
+    publish:
+      message:
+        $ref: '#/components/messages/userSignUp'
+  hitch/accounts/1/0/event/user/signup:
+    subscribe:
+      message:
+        $ref: '#/components/messages/userSignedUp'
+
+ 
+components:
+  messages:
+    userSignUp:
+      summary: Action to sign a user up.
+      description: |
+        Multiline description of what this action does. **It allows Markdown.**
+      tags:
+        - name: user
+        - name: signup
+      payload:
+        type: object
+        properties:
+          user:
+            $ref: '#/components/schemas/userCreate'
+          signup:
+            $ref: '#/components/schemas/signup'
+    userSignedUp:
+      payload:
+        type: object
+        properties:
+          test:
+            type: array
+            items:
+              type: object
+              properties:
+                key1:
+                  type: string
+                key2:
+                  type: integer
+          user:
+            $ref: '#/components/schemas/user'
+          signup:
+            $ref: '#/components/schemas/signup'
+  schemas:
+    id:
+      title: id
+      description: Resource identifier
+      type: string
+    username:
+      title: username
+      description: User handle
+      type: string
+    datetime:
+      title: datetime
+      description: Date and Time of the message
+      type: string
+      format: date-time
+    user:
+      type: object
+      required:
+        - id
+        - username
+      properties:
+        id:
+          description: User Id
+          $ref: '#/components/schemas/id'
+        full_name:
+          description: User full name
+          type: string
+        username:
+          $ref: '#/components/schemas/username'
+    userCreate:
+      type: object
+      required:
+        - username
+      properties:
+        full_name:
+          description: User full name
+          type: string
+        username:
+          $ref: '#/components/schemas/username'
+    signup:
+      type: object
+      required:
+        - method
+        - datetime
+      properties:
+        method:
+          description: Signup method
+          type: string
+          enum:
+            - email
+            - facebook
+            - twitter
+            - github
+            - google
+        datetime:
+          $ref: '#/components/schemas/datetime'

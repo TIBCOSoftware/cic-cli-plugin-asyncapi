@@ -1,0 +1,266 @@
+asyncapi: 2.1.0
+info:
+  title: Blockchain.info Websocket API
+  version: '1.0'
+  description: >-
+    Our WebSocket API allows developers to receive Real-Time notifications about
+    new transactions and blocks.
+servers:
+  default:
+    url: ws.blockchain.info/inv
+    description: >-
+      Once the socket is open you can subscribe to a channel by sending an "op"
+      message.
+    variables:
+      port:
+        description: There is only a default port 80 in use from what I can tell.
+        default: '80800'
+    protocol: wss
+components:
+  messages:
+    ping:
+      summary: The default ping.
+      schemaFormat: application/schema+json;version=draft-07
+      payload:
+        type: object
+        properties:
+          op:
+            type: string
+            description: The operation.
+    unconfirmed_sub:
+      summary: Subscribe to notifications for all new bitcoin transactions.
+      schemaFormat: application/schema+json;version=draft-07
+      payload:
+        type: object
+        properties:
+          op:
+            type: string
+            description: The operation.
+          x:
+            $ref: '#/components/schemas/transaction'
+    addr_sub:
+      summary: Receive new transactions for a specific bitcoin address.
+      schemaFormat: application/schema+json;version=draft-07
+      payload:
+        type: object
+        properties:
+          op:
+            type: string
+            description: The operation.
+          x:
+            $ref: '#/components/schemas/transaction'
+    blocks_sub:
+      summary: >-
+        Receive notifications when a new block is found. If the chain splits you
+        will receive more than one notification for a specific block height.
+      schemaFormat: application/schema+json;version=draft-07
+      payload:
+        type: object
+        properties:
+          op:
+            type: string
+            description: The operation.
+          x:
+            $ref: '#/components/schemas/block'
+  schemas:
+    transaction:
+      type: object
+      properties:
+        lock_time:
+          type: integer
+          title: The Lock_time Schema
+        ver:
+          type: integer
+          title: The Ver Schema
+        size:
+          type: integer
+          title: The Size Schema
+        inputs:
+          type: array
+          items:
+            type: object
+            properties:
+              sequence:
+                type: integer
+                title: The Sequence Schema
+              prev_out:
+                type: object
+                properties:
+                  spent:
+                    type: boolean
+                    title: The Spent Schema
+                  tx_index:
+                    type: integer
+                    title: The Tx_index Schema
+                  type:
+                    type: integer
+                    title: The Type Schema
+                  addr:
+                    type: string
+                    title: The Addr Schema
+                  value:
+                    type: integer
+                    title: The Value Schema
+                  'n':
+                    type: integer
+                    title: The N Schema
+                  script:
+                    type: string
+                    title: The Script Schema
+              script:
+                type: string
+                title: The Script Schema
+        time:
+          type: integer
+          title: The Time Schema
+        tx_index:
+          type: integer
+          title: The Tx_index Schema
+        vin_sz:
+          type: integer
+          title: The Vin_sz Schema
+        hash:
+          type: string
+          title: The Hash Schema
+        vout_sz:
+          type: integer
+          title: The Vout_sz Schema
+        relayed_by:
+          type: string
+          title: The Relayed_by Schema
+        out:
+          type: array
+          items:
+            type: object
+            properties:
+              spent:
+                type: boolean
+                title: The Spent Schema
+              tx_index:
+                type: integer
+                title: The Tx_index Schema
+              type:
+                type: integer
+                title: The Type Schema
+              addr:
+                type: string
+                title: The Addr Schema
+              value:
+                type: integer
+                title: The Value Schema
+              'n':
+                type: integer
+                title: The N Schema
+              script:
+                type: string
+                title: The Script Schema
+    block:
+      $id: /properties/x
+      type: object
+      properties:
+        txIndexes:
+          type: array
+          items:
+            type: integer
+            title: The 0th Schema
+            default: 0
+            examples:
+              - 3187871
+              - 3187868
+        nTx:
+          type: integer
+          title: The Ntx Schema
+          default: 0
+          examples:
+            - 0
+        totalBTCSent:
+          type: integer
+          title: The Totalbtcsent Schema
+          default: 0
+          examples:
+            - 0
+        estimatedBTCSent:
+          type: integer
+          title: The Estimatedbtcsent Schema
+          default: 0
+          examples:
+            - 0
+        reward:
+          type: integer
+          title: The Reward Schema
+          default: 0
+          examples:
+            - 0
+        size:
+          type: integer
+          title: The Size Schema
+          default: 0
+          examples:
+            - 0
+        blockIndex:
+          type: integer
+          title: The Blockindex Schema
+          default: 0
+          examples:
+            - 190460
+        prevBlockIndex:
+          type: integer
+          title: The Prevblockindex Schema
+          default: 0
+          examples:
+            - 190457
+        height:
+          type: integer
+          title: The Height Schema
+          default: 0
+          examples:
+            - 170359
+        hash:
+          type: string
+          title: The Hash Schema
+          default: ''
+        mrklRoot:
+          type: string
+          title: The Mrklroot Schema
+          default: ''
+        version:
+          type: integer
+          title: The Version Schema
+          default: 0
+          examples:
+            - 1
+        time:
+          type: integer
+          title: The Time Schema
+          default: 0
+          examples:
+            - 1331301261
+        bits:
+          type: integer
+          title: The Bits Schema
+          default: 0
+          examples:
+            - 436942092
+        nonce:
+          type: integer
+          title: The Nonce Schema
+          default: 0
+          examples:
+            - 758889471
+channels:
+  /blockchain-info/ping:
+    subscribe:
+      message:
+        $ref: '#/components/messages/ping'
+  /blockchain-info/unconfirmed_sub:
+    subscribe:
+      message:
+        $ref: '#/components/messages/unconfirmed_sub'
+  /blockchain-info/addr_sub:
+    subscribe:
+      message:
+        $ref: '#/components/messages/addr_sub'
+  /blockchain-info/blocks_sub:
+    subscribe:
+      message:
+        $ref: '#/components/messages/blocks_sub'
