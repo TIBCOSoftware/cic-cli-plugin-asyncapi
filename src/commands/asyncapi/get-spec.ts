@@ -13,6 +13,7 @@ import * as path from 'path';
 export default class AsyncapiGetSpec extends TCBaseCommand {
   static description = 'Pulls spec from new API modeler';
 
+  static hidden: boolean = true;
   static flags = {
     ...TCBaseCommand.flags,
     name: flags.string({ char: 'n', description: 'API name in the modeler' }),

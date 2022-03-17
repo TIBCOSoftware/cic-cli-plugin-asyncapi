@@ -12,7 +12,7 @@ import * as path from 'path';
 import * as yaml from 'js-yaml';
 
 export default class TransformCommand extends BaseCommand {
-  static description = 'Transform AsyncAPI spec to Flogo Or Flogo to AsyncAPI spec';
+  static description = 'Transform AsyncAPI spec to Flogo';
 
   static examples = [`tibco asyncapi:transform --to flogo --from ./asyncapispec.json`];
 

@@ -1,14 +1,14 @@
 {
   "name": "@tibco-software/cli-plugin-asyncapi",
   "description": "AsyncAPI support for TIBCO products",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta.1",
   "author": "TIBCO Software",
   "bugs": "https://github.com/TIBCOSoftware/cic-cli-plugin-asyncapi/issues",
   "dependencies": {
     "@asyncapi/parser": "^1.9.0",
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
-    "@tibco-software/cic-cli-core": "^1.0.0-beta",
+    "@tibco-software/cic-cli-core": "^1.0.0-beta.1",
     "js-yaml": "^4.1.0",
     "openapi-sampler": "^1.1.0",
     "tslib": "^1.14.1"
@@ -58,7 +58,6 @@
     "postpack": "rm -f oclif.manifest.json",
     "lint": "eslint . --ext .ts --config .eslintrc",
     "prepack": "npm run build && oclif-dev manifest && oclif-dev readme",
-    "build": "rm -rf lib && tsc -b",
-    "version": "oclif-dev readme && git add README.md"
+    "build": "rm -rf lib && tsc -b"
   }
 }
