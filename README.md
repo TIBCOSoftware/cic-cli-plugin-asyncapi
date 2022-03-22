@@ -17,7 +17,7 @@ Every subscribe operation of a channel will be transformed into a write activity
 
 ```
 Install Plugin
-  $ tibco plugin:install @tibco-software/cli-plugin-asyncapi
+  $ tibco plugins:install @tibco-software/cli-plugin-asyncapi
 USAGE
   $ tibco asyncapi:transform [flags] <args>
 ```
