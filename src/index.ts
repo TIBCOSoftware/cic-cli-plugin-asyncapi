@@ -4,4 +4,4 @@
  * in the license file that is distributed with this file.
  */
 
-export default {};
+export { genFlogoModel } from './flogo-gen/main';
