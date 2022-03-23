@@ -41,9 +41,9 @@ function buildFlogo() {
       let flow = genPublisherFlow(name, channel);
 
       if (flow) {
-        let trigger = genTimerTrigger(5, 'Second', flow.id);
+        //      let trigger = genTimerTrigger(5, 'Second', flow.id);
         flogo.resources.push(flow);
-        flogo.triggers.push(trigger);
+        //      flogo.triggers.push(trigger);
       }
     }
     if (channel.hasPublish()) {
@@ -86,7 +86,7 @@ function genPublisherFlow(chlName: string, channel: asyncParser.Channel) {
 }
 
 function getConnId() {
-  if (apiSpec.info()) return `mqtt-connection-for-${apiSpec.id()}`;
+  if (apiSpec.id()) return `mqtt-connection-for-${apiSpec.id()}`;
   else return `mqtt-connection-for-${apiSpec.info().title().replace(/\s+/g, '-')}`;
 }
 

@@ -6,7 +6,7 @@
 
 import * as asyncParser from '@asyncapi/parser';
 import * as REF from '../constants/references.json';
-import { genLoggingTask, genSchema, genTimerTrigger, getSchemaType, getSampleJSON, initializeFlow } from '../common';
+import { genLoggingTask, genSchema, getSchemaType, getSampleJSON, initializeFlow } from '../common';
 
 let flogo: any;
 let apiSpec: asyncParser.AsyncAPIDocument;
@@ -83,9 +83,9 @@ function buildFlogo() {
       let flow = genPublisherFlow(name, channel);
 
       if (flow) {
-        let trigger = genTimerTrigger(5, 'Second', flow.id);
+        //       let trigger = genTimerTrigger(5, 'Second', flow.id);
         flogo.resources.push(flow);
-        flogo.triggers.push(trigger);
+        //       flogo.triggers.push(trigger);
       }
     }
     if (channel.hasPublish()) {
