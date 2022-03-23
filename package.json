@@ -1,7 +1,7 @@
 {
   "name": "@tibco-software/cli-plugin-asyncapi",
   "description": "AsyncAPI support for TIBCO products",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "author": "TIBCO Software",
   "bugs": "https://github.com/TIBCOSoftware/cic-cli-plugin-asyncapi/issues",
   "dependencies": {
