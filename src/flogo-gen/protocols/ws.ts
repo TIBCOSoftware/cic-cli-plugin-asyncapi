@@ -58,7 +58,7 @@ function genSubFlow(subscribeOp: asyncParser.SubscribeOperation, chlName: string
   let prevTsk = '';
 
   msgs.forEach((msg) => {
-    if (msg.payload().type() == 'object') {
+    if (msg.payload().type() == 'object' || msg.payload().type() == 'array') {
       let schemaName = getSchemaName(msg);
       flogo.schemas[schemaName] = genSchema(msg.originalPayload(), msg.originalSchemaFormat());
     }
@@ -118,7 +118,7 @@ function wsWriteTask(msg: asyncParser.Message) {
   task.activity.input.wsconnection = '=$flow.wsconnection';
   task.activity.input.message = JSONSampler.sample(msg.originalPayload(), { skipNonRequired: false, quiet: true });
 
-  if (msg.payload().type() == 'object') {
+  if (msg.payload().type() == 'object' || msg.payload().type() == 'array') {
     task.activity.settings.format = 'JSON';
     task.activity.settings.jsonSchema = '';
     task.activity.schemas.input.message = `schema://${getSchemaName(msg)}`;

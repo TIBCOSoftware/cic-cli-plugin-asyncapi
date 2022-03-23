@@ -44,5 +44,5 @@ EXAMPLE
   tibco asyncapi:transform --to flogo --from ./asyncapispec.json
 ```
 
-_See code: [src/commands/asyncapi/transform.ts](https://github.com/TIBCOSoftware/cic-cli-plugin-asyncapi/blob/v1.0.0-beta.1/src/commands/asyncapi/transform.ts)_
+_See code: [src/commands/asyncapi/transform.ts](https://github.com/TIBCOSoftware/cic-cli-plugin-asyncapi/blob/v1.0.0-beta.2/src/commands/asyncapi/transform.ts)_
 <!-- commandsstop -->

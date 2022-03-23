@@ -71,7 +71,7 @@ function genPublisherFlow(chlName: string, channel: asyncParser.Channel) {
   let schemaName = '';
 
   let message = channel.subscribe().message();
-  if (message.payload().type() == 'object') {
+  if (message.payload().type() == 'object' || message.payload().type() == 'array') {
     let schema = genSchema(message.originalPayload(), message.originalSchemaFormat());
     schemaName = getPayloadName(message);
     flogo.schemas[schemaName] = schema;
@@ -219,7 +219,7 @@ function genConsumerFlow(chlName: string, channel: asyncParser.Channel) {
 
   let payloadName = getPayloadName(message);
 
-  if (message.payload().type() != 'object') {
+  if (message.payload().type() != 'object' || message.payload().type() != 'array') {
     flow.data.metadata.input.push(
       {
         name: payloadName,

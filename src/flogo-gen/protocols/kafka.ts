@@ -134,7 +134,7 @@ function genPublisherFlow(chlName: string, channel: asyncParser.Channel) {
   let schemaName = '';
 
   let message = channel.subscribe().message();
-  if (message.payload().type() == 'object') {
+  if (message.payload().type() == 'object' || message.payload().type() == 'array') {
     let schema = genSchema(message.originalPayload(), message.originalSchemaFormat());
     schemaName = getPayloadName(message);
     flogo.schemas[schemaName] = schema;
@@ -176,7 +176,7 @@ function genKafkaProducer(message: asyncParser.Message, chlName: string, schemaN
 
   let type, inputValKey;
 
-  if (message.payload().type() == 'object') {
+  if (message.payload().type() == 'object' || message.payload().type() == 'array') {
     type = getSchemaType(message.originalSchemaFormat());
     inputValKey = type === 'json' ? type + 'Value' : type + 'Data';
     task.activity.schemas.input[inputValKey] = `schema://${schemaName}`;
@@ -210,7 +210,7 @@ function genConsumerFlow(chlName: string, channel: asyncParser.Channel) {
 
   let payloadName = getPayloadName(message);
 
-  if (message.payload().type() != 'object') {
+  if (message.payload().type() != 'object' || message.payload().type() != 'array') {
     flow.data.metadata.input.push(
       {
         name: payloadName,
@@ -264,7 +264,7 @@ function genKafkaHandler(chlName: string, channel: asyncParser.Channel, flowId: 
   let type = getSchemaType(schemaFormat);
   let dataType: string;
 
-  if (message.payload().type() != 'object') {
+  if (message.payload().type() != 'object' || message.payload().type() != 'array') {
     dataType = 'String';
     type = 'String';
   } else {
@@ -307,7 +307,7 @@ function genKafkaHandler(chlName: string, channel: asyncParser.Channel, flowId: 
 
   handler.action.input = input;
 
-  if (message.payload().type() == 'object') {
+  if (message.payload().type() == 'object' || message.payload().type() == 'array') {
     let schemas: any = {
       output: {
         [`${type}Value`]: `schema://${getPayloadName(message)}`, // reference to schema name
